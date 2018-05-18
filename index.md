@@ -44,7 +44,7 @@ Coroutines add to generators the ability to send values to them.
 This turn out a one-way communication, from generator to caller,
 into a two-way communication by channel between them.
 
-Values can be passed to coroutines by calling ```php ->send()`` method.
+Values can be passed to coroutines by calling  __->send()__ method.
 Here an example of how it works:
 
 ```php
@@ -69,8 +69,8 @@ foreach ($generator as $range) {
 }
 ```
 
-The ```xrange()`` function shown above provides the same fuctionality as
-the built-in ```range()`` function; the only difference is that it will
-return an array filled with PHP\_INT\_MAX numbers while ```xrange()`` returns
+The _xrange()_ function shown above provides the same fuctionality as
+the built-in _range()_ function; the only difference is that it will
+return an array filled with PHP_INT_MAX numbers while _xrange()_ returns
 an iterator that will give back the numbers one by one without creating
 the whole array in memory.
