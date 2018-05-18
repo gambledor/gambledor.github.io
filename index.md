@@ -40,6 +40,37 @@ The advantage of this approach is to allow you to work with large
 detests without loading them into memory all in a once.
 
 ## Coroutines
-Coroutines add to the above generators the ability to send values to
-them. This turn out a one-way communication from generators to caller
+Coroutines add to generators the ability to send values to them.
+This turn out a one-way communication, from generator to caller,
 into a two-way communication by channel between them.
+
+Values can be passed to coroutines by calling ```php ->send()`` method.
+Here an example of how it works:
+
+```php
+function xrange(int $max = 10): Generator
+{
+    for ($i = 0; $i < $max; $i++) {
+        $injected = yield $i;
+        if ($injected === 'stop') {
+            // using return in a generator breaks out the generator function
+            return;
+        }
+    }
+}
+
+$generator = xrange(PHP_INT_MAX);
+foreach ($generator as $range) {
+    echo "Dataset {$range}" . PHP_EOL;
+    if ($range === 1000) {
+        $generator->send('stop');
+        echo 'Generator stopped';
+    }
+}
+```
+
+The ```xrange()`` function shown above provides the same fuctionality as
+the built-in ```range()`` function; the only difference is that it will
+return an array filled with PHP\_INT\_MAX numbers while ```xrange()`` returns
+an iterator that will give back the numbers one by one without creating
+the whole array in memory.
